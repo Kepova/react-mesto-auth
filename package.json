@@ -1,7 +1,7 @@
 {
-  "name": "mesto-react",
+  "name": "mesto-react-auth",
   "version": "0.1.0",
-  "homepage": "https://kepova.github.io/mesto-react",
+  "homepage": "https://kepova.github.io/react-mesto-auth",
   "private": true,
   "dependencies": {
     "@testing-library/jest-dom": "^5.16.4",
@@ -19,7 +19,7 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "predeploy": "npm run build",
-    "deploy": "gh-pages -d build"
+    "deploy": "gh-pages -d dist"
   },
   "eslintConfig": {
     "extends": [
