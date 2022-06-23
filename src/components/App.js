@@ -256,7 +256,8 @@ function App() {
           onClose={closeAllPopups} />
         <DeletePopup card={isDeleteCardPopup}
           onClose={closeAllPopups}
-          onCardDelete={handleCardDelete} />
+          onCardDelete={handleCardDelete}
+          loggedIn={loggedIn} />
         <InfoTooltip isOpen={isRegisterResponsePopup}
           onClose={closeAllPopups} />
 

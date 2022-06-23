@@ -24,4 +24,5 @@
 
 **Ссылка на проект**
 
-Проект доступен на GitHub Pages [по этой ссылке](https://github.com/Kepova/react-mesto-auth).
+Проект доступен на GitHub Pages [по этой ссылке](https://kepova.github.io/react-mesto-auth).
+https://kepova.github.io/mesto-react/

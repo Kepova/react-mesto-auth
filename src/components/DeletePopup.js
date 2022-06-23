@@ -1,6 +1,6 @@
 import PopupWithForm from './PopupWithForm';
 
-function DeletePopup({ card, onClose, onCardDelete }) {
+function DeletePopup({ card, onClose, onCardDelete, loggedIn }) {
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -13,7 +13,8 @@ function DeletePopup({ card, onClose, onCardDelete }) {
             nameButton={'Да'}
             isOpen={card?.name}
             onClose={onClose}
-            onSubmit={handleSubmit}>
+            onSubmit={handleSubmit}
+            loggedIn={loggedIn}>
         </PopupWithForm>
     )
 };
