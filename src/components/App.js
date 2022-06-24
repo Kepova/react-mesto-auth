@@ -14,30 +14,51 @@ import ProtectedRoute from './ProtectedRoute';
 import Login from './Login';
 import Register from './Register';
 import InfoTooltip from './InfoTooltip';
-import { register, login, getUserData } from '../mestoAuth';
+import { register, login, getUserData } from '../utils/mestoAuth';
 
 function App() {
 
-  let [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = useState(false);
-  let [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = useState(false);
-  let [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = useState(false);
-  let [isDeleteCardPopup, setIsDeleteCardPopup] = useState(null);
-  let [isRegisterResponsePopup, setIsRegisterResponsePopup] = useState('');
-  let [selectedCard, setSelectedCard] = useState(null);
-  let [currentUser, setCurrentUser] = useState({});
-  let [cards, setCards] = useState([]);
-  let [loggedIn, setLoggedIn] = useState(false);
-  let [userEmail, setUserEmail] = useState('');
+  const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = useState(false);
+  const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = useState(false);
+  const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = useState(false);
+  const [isDeleteCardPopup, setIsDeleteCardPopup] = useState(null);
+  const [isRegisterResponsePopup, setIsRegisterResponsePopup] = useState('');
+  const [selectedCard, setSelectedCard] = useState(null);
+  const [currentUser, setCurrentUser] = useState({});
+  const [cards, setCards] = useState([]);
+  const [loggedIn, setLoggedIn] = useState(false);
+  const [userEmail, setUserEmail] = useState('');
   const history = useHistory();
-
 
   useEffect(() => {
     checkToken();
-  }, [])
+  }, []);
 
+  // Получение данных
   useEffect(() => {
     if (loggedIn) {
       history.push('/');
+      Promise.all([api.getUser(), api.getInitialCards()])
+        .then(([userData, res]) => {
+          // установка данных пользователя
+          setCurrentUser(userData);
+          //начальные карточки
+          const cardsData = res.map((card) => {
+            return {
+              name: card.name,
+              link: card.link,
+              likes: card.likes,
+              _id: card._id,
+              owner: {
+                _id: card.owner._id
+              }
+            };
+          })
+          setCards(cardsData);
+        })
+        .catch(err => {
+          console.log(err);
+        });
     }
   }, [loggedIn]);
 
@@ -85,6 +106,7 @@ function App() {
       })
       .catch((err => {
         console.log(err);
+        setIsRegisterResponsePopup('fail');
       }))
   }
 
@@ -93,31 +115,6 @@ function App() {
     localStorage.removeItem('jwt');
     setLoggedIn(false);
   }
-
-  // Получение начальных данных
-  useEffect(() => {
-    Promise.all([api.getUser(), api.getInitialCards()])
-      .then(([userData, res]) => {
-        // установка данных пользователя
-        setCurrentUser(userData);
-        //начальные карточки
-        const cardsData = res.map((card) => {
-          return {
-            name: card.name,
-            link: card.link,
-            likes: card.likes,
-            _id: card._id,
-            owner: {
-              _id: card.owner._id
-            }
-          };
-        })
-        setCards(cardsData);
-      })
-      .catch(err => {
-        console.log(err);
-      });
-  }, []);
 
   //Лайк карточки
   const handleCardLike = (card) => {
@@ -265,6 +262,5 @@ function App() {
     </ CurrentUserContext.Provider>
   )
 };
-
 
 export default App;

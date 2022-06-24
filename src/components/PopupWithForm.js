@@ -3,10 +3,10 @@ import { Route, Link } from 'react-router-dom';
 
 function PopupWithForm({ title, name, nameButton, children, isOpen, onClose, onSubmit, loggedIn }) {
 
-    const formloggedInClassName = ` ${loggedIn ? `popup popup_for_${name} ${isOpen ? 'popup_opened' : ''}` : `popup_for_${name}`}`
+    const formloggedInClassName = `popup_for_${name} ${loggedIn && `${isOpen && 'popup popup_opened'}`}`
     return (
         <div className={formloggedInClassName}>
-            <div className={`${loggedIn ? 'popup__container' : 'popup__container-login'}`} >
+            <div className={`${(loggedIn && isOpen) ? 'popup__container' : 'popup__container-login'}`} >
                 <form className={`popup__form popup__form-${name}`} name={`${name}-form`} onSubmit={onSubmit} noValidate>
                     <h2 className={`popup__title ${!loggedIn && 'popup__title-login'}`}>{title}</h2>
                     {children}

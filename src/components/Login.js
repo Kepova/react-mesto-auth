@@ -14,13 +14,13 @@ function Login(props) {
             [name]: value
         }))
     }
+
     const handleLogin = (e) => {
         e.preventDefault();
         if (!formUserData.email || !formUserData.password) {
             return
         }
         props.onLogin({ email: formUserData.email, password: formUserData.password })
-
     };
 
     return (
@@ -29,8 +29,8 @@ function Login(props) {
             nameButton={'Войти'}
             loggedIn={props.loggedIn}
             onSubmit={handleLogin}
+            isOpen={false}
         >
-
             <fieldset className="popup__login">
                 <div className="popup__input-container">
                     <input type="email" name="email" id="popup__input-login-email" className="popup__input-login popup__input_info_email"
@@ -47,7 +47,6 @@ function Login(props) {
                     </div>
                 </div>
             </fieldset>
-
         </PopupWithForm>
     );
 }

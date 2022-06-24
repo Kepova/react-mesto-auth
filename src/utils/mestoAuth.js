@@ -7,7 +7,6 @@ const CheckResponse = (res) => {
     }
     return res.json()
         .then((data) => {
-            console.log(data)
             throw new Error(data.message);
         })
 }
